@@ -112,7 +112,7 @@ public class MainFrame extends JFrame{
                 Desktop desktop = Desktop.getDesktop();
                 try{
                     //todo:uri
-                    URI uri = new URI("");
+                    URI uri = new URI("https://github.com/40273922/Integrated/tree/master/src/test");
                     desktop.browse(uri);
                 }catch(URISyntaxException | IOException exc){
                     throw new RuntimeException(exc);
