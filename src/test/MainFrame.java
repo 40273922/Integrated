@@ -68,7 +68,8 @@ public class MainFrame extends JFrame{
                 protected void paintComponent(Graphics g){
                     super.paintComponent(g);
                     g.setColor(Color.cyan);
-                    g.drawLine((int)(10 + 100 * 2.4),(int)(150 + 100 * 2.4),(int)(100 * 4.8 + 10),(int)(150 + 100 * 2.4));
+                    g.drawLine(10,(int)(150 + 100 * 2.4),(int)(100 * 4.8 + 10),(int)(150 + 100 * 2.4));
+                    g.drawLine((int)(10 + 100 * 2.4),(int)(150),(int)(10 + 100 * 2.4),(int)(150 + 100 * 4.8));
                     g.setColor(Color.red);
                     for(int i = 0;i <= circle.N;i++)
                         g.drawOval((int)(10 + circle.dR * 120 * i * 2.4),(int)(150 + circle.dR * 120 * i * 2.4),2 * (int)(100 * 2.4 - circle.dR * 120 * i * 2.4),2 * (int)(100 * 2.4 - circle.dR * 120 * i * 2.4));
