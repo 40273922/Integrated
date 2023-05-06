@@ -12,6 +12,9 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public class TableFrame extends JFrame{
+    public static void main(String[] args) throws SQLException{
+        new TableFrame();
+    }
     JScrollPane jPanel = new JScrollPane();
     JTable jTable = new JTable();
     DAOImpl dao = new DAOImpl();

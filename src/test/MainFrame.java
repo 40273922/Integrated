@@ -48,11 +48,11 @@ public class MainFrame extends JFrame{
     public static final double pi = 3.1415926535897932;
     private static final List<CircleEntity> circleEntity = Collections.synchronizedList(new ArrayList<>());
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException{
         new MainFrame();
     }
 
-    public MainFrame(){
+    public MainFrame() throws SQLException{
         SwingUtilities.invokeLater(()->{
             try{
                 UIManager.setLookAndFeel(new FlatGitHubDarkContrastIJTheme());
@@ -184,6 +184,7 @@ public class MainFrame extends JFrame{
                         throw new RuntimeException(exc);
                     }
                 });
+                processBarWindow.dispose();
                 JOptionPane.showMessageDialog(this,"导入成功!");
             }).start());
             JMenuItem jMenuItem2 = new JMenuItem("退出界面");

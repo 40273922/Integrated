@@ -19,6 +19,7 @@ public class DbConn{
         }
         return DriverManager.getConnection(url);
     }
+    @Deprecated
     public PreparedStatement getPs(String sql) throws SQLException{
         return getConn(url).prepareStatement(sql);
     }
