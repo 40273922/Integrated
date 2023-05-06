@@ -21,7 +21,7 @@ public class DAOImpl implements MainDAO{
 
     public DAOImpl() throws SQLException{
         if(checklogin()) System.out.println("connect");
-        else {
+        else{
             System.out.println("failed");
         }
     }
@@ -29,22 +29,22 @@ public class DAOImpl implements MainDAO{
 
     @Override
     public boolean checklogin() throws SQLException{
-        return conn.getConn(conn.getUrl())!=null;
+        return conn.getConn(conn.getUrl()) != null;
     }
 
     @Override
     public void insert(CircleEntity circleEntity) throws SQLException{
         lock.lock();
         try{
-                Connection con = conn.getConn(conn.getUrl());
-                PreparedStatement preparedStatement = con.prepareStatement("insert into pirsrc values(?,?,?,?)");
-                preparedStatement.setObject(1,circleEntity.getN());
-                preparedStatement.setObject(2,circleEntity.getDr());
-                preparedStatement.setObject(3,circleEntity.getArea());
-                preparedStatement.setObject(4,circleEntity.getMis());
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-                con.close();
+            Connection con = conn.getConn(conn.getUrl());
+            PreparedStatement preparedStatement = con.prepareStatement("insert into pirsrc values(?,?,?,?)");
+            preparedStatement.setObject(1,circleEntity.getN());
+            preparedStatement.setObject(2,circleEntity.getDr());
+            preparedStatement.setObject(3,circleEntity.getArea());
+            preparedStatement.setObject(4,circleEntity.getMis());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            con.close();
         }finally{
             lock.unlock();
         }
@@ -78,20 +78,21 @@ public class DAOImpl implements MainDAO{
             lock.unlock();
         }
     }
+
     @Override
     public int selectRawsCount() throws SQLException{
         lock.lock();
         try{
-                Connection con = conn.getConn(conn.getUrl());
-                int count = 0;
-                int r =0;
-                PreparedStatement preparedStatement = con.prepareStatement("select count(*) from pirsrc");
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while(resultSet.next())r = resultSet.getInt(1);
-                resultSet.close();
-                preparedStatement.close();
-                con.close();
-                return r;
+            Connection con = conn.getConn(conn.getUrl());
+            int count = 0;
+            int r = 0;
+            PreparedStatement preparedStatement = con.prepareStatement("select count(*) from pirsrc");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) r = resultSet.getInt(1);
+            resultSet.close();
+            preparedStatement.close();
+            con.close();
+            return r;
         }finally{
             lock.unlock();
         }
@@ -101,11 +102,11 @@ public class DAOImpl implements MainDAO{
     public void deleteAll(){
         lock.lock();
         try{
-                Connection con = conn.getConn(conn.getUrl());
-                PreparedStatement preparedStatement = con.prepareStatement("delete from pirsrc p");
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-                con.close();
+            Connection con = conn.getConn(conn.getUrl());
+            PreparedStatement preparedStatement = con.prepareStatement("delete from pirsrc p");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            con.close();
         }catch(SQLException e){
             throw new RuntimeException(e);
         }finally{
