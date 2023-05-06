@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 @SuppressWarnings("all")
 public class DbConn{
-    private String url = "jdbc:mysql:///tutorials?user=root&password=40273939zjpzjp";
+    private String url = "jdbc:mysql:///tutorials?user=root&password=40273939";
     public Connection getConn(String url) throws SQLException{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");

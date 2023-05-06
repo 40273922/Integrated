@@ -190,9 +190,9 @@ public class MainFrame extends JFrame{
             }).start());
             JMenuItem jMenuItem2 = new JMenuItem("退出界面");
             JMenuItem jMenuItem3 = new JMenuItem("作者");
-            jMenuItem3.addActionListener(e->JOptionPane.showMessageDialog(this,"软件2211 翟金培"));
+            jMenuItem3.addActionListener(e->JOptionPane.showMessageDialog(this," "));
             JMenuItem jMenuItem4 = new JMenuItem("小组成员");
-            jMenuItem4.addActionListener(e->JOptionPane.showMessageDialog(this,"软件2211 翟金培\n软件2211 陈也\n软件2211 殷文喧"));
+            jMenuItem4.addActionListener(e->JOptionPane.showMessageDialog(this," "));
             JMenuItem jMenuItem5 = new JMenuItem("源代码链接");
             jMenuItem5.addActionListener(e->{
                 Desktop desktop = Desktop.getDesktop();
