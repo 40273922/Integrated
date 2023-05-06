@@ -1,6 +1,8 @@
 package test;
 
-import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubDarkContrastIJTheme;
+import test.dao.DAOImpl;
+import test.dao.MainDAO;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -11,6 +13,11 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Zhai Jinpei
@@ -37,6 +44,9 @@ public class MainFrame extends JFrame{
     }
 
     Circle circle = new Circle();
+    MainDAO dao = new DAOImpl();
+    public static final double pi = 3.1415926535897932;
+    private static final List<CircleEntity> circleEntity = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args){
         new MainFrame();
@@ -45,7 +55,7 @@ public class MainFrame extends JFrame{
     public MainFrame(){
         SwingUtilities.invokeLater(()->{
             try{
-                UIManager.setLookAndFeel(new FlatCarbonIJTheme());
+                UIManager.setLookAndFeel(new FlatGitHubDarkContrastIJTheme());
             }catch(UnsupportedLookAndFeelException e){
                 throw new RuntimeException(e);
             }
@@ -104,7 +114,7 @@ public class MainFrame extends JFrame{
             Rfield.setText("1");
             Rfield.setEditable(false);
             JLabel EA = new JLabel("单位圆的准确面积(πR^2)=");
-            JTextField EAfield = new JTextField("3.1415926535897932");
+            JTextField EAfield = new JTextField(String.valueOf(pi));
             EAfield.setEditable(false);
             JLabel dr = new JLabel("dR(R的微分)=R/N=");
             JTextField drfield = new JTextField(String.valueOf(circle.dR));
@@ -113,10 +123,13 @@ public class MainFrame extends JFrame{
             JTextField exfield = new JTextField();
             exfield.setEditable(false);
             jSlider.addChangeListener(e->{
-                double n = jSlider.getValue();
-                NNt.setText(String.valueOf(jSlider.getValue()));
-                AREA.setText(String.valueOf(circle.setN(n).AREAR));
-                exfield.setText(String.valueOf(Double.parseDouble(EAfield.getText()) - Double.parseDouble(AREA.getText())));
+                int n = jSlider.getValue();
+                double mis = circle.setN(n).AREAR - pi;
+                if(n == 0) circleEntity.add(new CircleEntity(n,0.0d,0.0d,0.0d));
+                else circleEntity.add(new CircleEntity(n,circle.dR,circle.AREAR,mis));
+                NNt.setText(String.valueOf(n));
+                AREA.setText(String.valueOf(circle.AREAR));
+                exfield.setText(String.valueOf(mis));
                 drfield.setText(String.valueOf(circle.dR));
                 circlePanel.repaint();
                 areaPanel.repaint();
@@ -140,6 +153,39 @@ public class MainFrame extends JFrame{
             JMenuBar jMenuBar2 = new JMenuBar();
             JMenu jMenu = new JMenu("选项");
             JMenu jMenu2 = new JMenu("关于");
+            JMenu jMenu3 = new JMenu("数据");
+            JMenuItem jMenuItem = new JMenuItem("数据导入mysql");
+            JMenuItem jMenuItem1 = new JMenuItem("查看数据表格");
+            jMenuItem1.addActionListener(e->{
+                try{
+                    new TableFrame();
+                }catch(SQLException exc){
+                    throw new RuntimeException(exc);
+                }
+            });
+            JMenuItem jMenuItem7 = new JMenuItem("清空表数据");
+            jMenuItem7.addActionListener(e->{
+                dao.deleteAll();
+                JOptionPane.showMessageDialog(this,"已清空!");
+            });
+            jMenu3.add(jMenuItem1);
+            jMenu3.add(jMenuItem7);
+            jMenuItem.addActionListener(e->new Thread(()->{
+                AtomicInteger i = new AtomicInteger();
+                ProcessBarWindow processBarWindow = new ProcessBarWindow();
+                circleEntity.forEach(Ent->{
+                    String info = "N:" + Ent.getN() + ",getNdr:" + Ent.getDr() + ",Area:" + Ent.getArea() + ",Mismatch:" + Ent.getMis();
+                    System.out.println(info);
+                    i.getAndIncrement();
+                    processBarWindow.jProgressBar.setValue(800 * i.intValue() / circleEntity.size());
+                    try{
+                        dao.insert(Ent);
+                    }catch(SQLException exc){
+                        throw new RuntimeException(exc);
+                    }
+                });
+                JOptionPane.showMessageDialog(this,"导入成功!");
+            }).start());
             JMenuItem jMenuItem2 = new JMenuItem("退出界面");
             JMenuItem jMenuItem3 = new JMenuItem("作者");
             jMenuItem3.addActionListener(e->JOptionPane.showMessageDialog(this,"软件2211 翟金培"));
@@ -166,6 +212,7 @@ public class MainFrame extends JFrame{
                 }
             });
             jMenuItem2.addActionListener(e->System.exit(0));
+            jMenu.add(jMenuItem);
             jMenu.add(jMenuItem2);
             jMenu2.add(jMenuItem3);
             jMenu2.add(jMenuItem4);
@@ -173,7 +220,8 @@ public class MainFrame extends JFrame{
             jMenu2.add(jMenuItem6);
             jMenuBar.add(jMenu);
             jMenuBar.add(jMenu2);
-            argsPanel.setLayout(new GridLayout(9,2));
+            jMenuBar.add(jMenu3);
+            argsPanel.setLayout(new GridLayout(10,2));
             argsPanel.add(jMenuBar);
             argsPanel.add(jMenuBar2);
             argsPanel.add(N);
