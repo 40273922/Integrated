@@ -2,7 +2,6 @@ package test;
 
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubDarkContrastIJTheme;
 import test.dao.DAOImpl;
-import test.dao.MainDAO;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -44,15 +43,15 @@ public class MainFrame extends JFrame{
     }
 
     Circle circle = new Circle();
-    MainDAO dao = new DAOImpl();
+    DAOImpl dao = new DAOImpl();
     public static final double pi = 3.1415926535897932;
     private static final List<CircleEntity> circleEntity = Collections.synchronizedList(new ArrayList<>());
 
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args){
         new MainFrame();
     }
 
-    public MainFrame() throws SQLException{
+    public MainFrame(){
         SwingUtilities.invokeLater(()->{
             try{
                 UIManager.setLookAndFeel(new FlatGitHubDarkContrastIJTheme());
@@ -69,7 +68,7 @@ public class MainFrame extends JFrame{
                     super.paintComponent(g);
                     g.setColor(Color.cyan);
                     g.drawLine(10,(int)(150 + 100 * 2.4),(int)(100 * 4.8 + 10),(int)(150 + 100 * 2.4));
-                    g.drawLine((int)(10 + 100 * 2.4),(int)(150),(int)(10 + 100 * 2.4),(int)(150 + 100 * 4.8));
+                    g.drawLine((int)(10 + 100 * 2.4),150,(int)(10 + 100 * 2.4),(int)(150 + 100 * 4.8));
                     g.setColor(Color.red);
                     for(int i = 0;i <= circle.N;i++)
                         g.drawOval((int)(10 + circle.dR * 120 * i * 2.4),(int)(150 + circle.dR * 120 * i * 2.4),2 * (int)(100 * 2.4 - circle.dR * 120 * i * 2.4),2 * (int)(100 * 2.4 - circle.dR * 120 * i * 2.4));
@@ -190,9 +189,9 @@ public class MainFrame extends JFrame{
             }).start());
             JMenuItem jMenuItem2 = new JMenuItem("退出界面");
             JMenuItem jMenuItem3 = new JMenuItem("作者");
-            jMenuItem3.addActionListener(e->JOptionPane.showMessageDialog(this," "));
+            jMenuItem3.addActionListener(e->JOptionPane.showMessageDialog(this,"软件2211 翟金培"));
             JMenuItem jMenuItem4 = new JMenuItem("小组成员");
-            jMenuItem4.addActionListener(e->JOptionPane.showMessageDialog(this," "));
+            jMenuItem4.addActionListener(e->JOptionPane.showMessageDialog(this,"软件2211 翟金培\n软件2211 陈也\n软件2211 殷文喧"));
             JMenuItem jMenuItem5 = new JMenuItem("源代码链接");
             jMenuItem5.addActionListener(e->{
                 Desktop desktop = Desktop.getDesktop();

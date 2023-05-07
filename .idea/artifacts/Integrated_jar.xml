@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Integrated:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Integrated_jar</output-path>
-    <root id="archive" name="Integrated.jar">
-      <element id="module-output" name="Integrated" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/src/test/flatlaf-demo-3.1.1.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
