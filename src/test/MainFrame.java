@@ -154,6 +154,11 @@ public class MainFrame extends JFrame{
             JMenu jMenu = new JMenu("选项");
             JMenu jMenu2 = new JMenu("关于");
             JMenu jMenu3 = new JMenu("数据");
+            JMenuItem jMenuItem0 = new JMenuItem("清空缓存");
+            jMenuItem0.addActionListener(e->{
+                circleEntity.clear();
+                JOptionPane.showMessageDialog(this,"已清空");
+            });
             JMenuItem jMenuItem = new JMenuItem("数据导入mysql");
             JMenuItem jMenuItem1 = new JMenuItem("查看数据表格");
             jMenuItem1.addActionListener(e->{
@@ -169,6 +174,7 @@ public class MainFrame extends JFrame{
                 JOptionPane.showMessageDialog(this,"已清空!");
             });
             jMenu3.add(jMenuItem1);
+            jMenu3.add(jMenuItem0);
             jMenu3.add(jMenuItem7);
             jMenuItem.addActionListener(e->new Thread(()->{
                 AtomicInteger i = new AtomicInteger();
